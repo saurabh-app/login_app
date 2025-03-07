@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:login_app/HomePage.dart';
+import 'views/crm_dashboard/crm_dashboard_view.dart';
+import 'views/crm_dashboard/crm_dashboard_view_model.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -113,10 +115,21 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   Widget _buildLoginButton() {
     return GestureDetector(
       onTap: () {
-       Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+      //  Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => HomePage()),
+      //   );
+         Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (_) => DashboardViewModel()),
+            ],
+            child: CrmDashboardView(),
+          ),),
         );
+        
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Login button pressed!')),
         );
